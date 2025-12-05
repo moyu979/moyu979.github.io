@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>dns与httpdns | Hexo</title>
+    
+    
+        <meta name="keywords" content="dns与httpdns" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="📘 DNS 相关对话（Q&#x2F;A 格式整理版）Q1. 我记得还有一个设计上 HTTPDNS，也给我讲讲？A：你可以把 HTTPDNS 理解为”DNS over HTTP&#x2F;HTTPS 的自建版本”，与 DoH（DNSover HTTPS）有相似点，但定位不同。 它主要解决的问题是：传统 DNS 经常被运营商劫持、污染、缓存错误，特别是在移动网络环境。 因此一些大厂（阿里、腾讯、字节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dns与httpdns">
+<meta property="og:url" content="http://example.com/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/dns%E4%B8%8Ehttpdns/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="📘 DNS 相关对话（Q&#x2F;A 格式整理版）Q1. 我记得还有一个设计上 HTTPDNS，也给我讲讲？A：你可以把 HTTPDNS 理解为”DNS over HTTP&#x2F;HTTPS 的自建版本”，与 DoH（DNSover HTTPS）有相似点，但定位不同。 它主要解决的问题是：传统 DNS 经常被运营商劫持、污染、缓存错误，特别是在移动网络环境。 因此一些大厂（阿里、腾讯、字节">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-01T16:41:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T08:23:13.776Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            八股文整理
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JAVA
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/01/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/JAVA/%E9%94%81%E9%83%A8%E5%88%86/">锁相关知识点</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            操作系统
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            系统工具
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/cgroup/">cgroup</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/OLAP%E6%95%B0%E6%8D%AE%E5%BA%93/">OLAP数据库</a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql%E4%B8%A4%E4%B8%AA%E5%BC%95%E6%93%8E%E7%9A%84%E5%8C%BA%E5%88%AB/">mysql三个引擎的区别</a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%89%E7%A7%8D%E7%B4%A2%E5%BC%95/">数据库的三种索引</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            传输层协议
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TCP
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE/TCP/%E6%8C%A5%E6%89%8B%E8%BF%87%E7%A8%8B/">tcp挥手与断开</a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE/TCP/%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B/">tcp握手与链接</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     <li class="file"><a href="/2025/12/01/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8D%8F%E8%AE%AE%E5%88%86%E5%B1%82/"></a></li>  <li class="file active"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/dns%E4%B8%8Ehttpdns/">dns与httpdns</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            测试用
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/11/28/%E6%B5%8B%E8%AF%95%E7%94%A8/hello-world/">Hello World</a></li>  <li class="file"><a href="/2025/11/28/%E6%B5%8B%E8%AF%95%E7%94%A8/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/">第一篇日志</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            算法题整理
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/11/30/%E7%AE%97%E6%B3%95%E9%A2%98%E6%95%B4%E7%90%86/lc%201590.%20%E4%BD%BF%E6%95%B0%E7%BB%84%E5%92%8C%E8%83%BD%E8%A2%AB%20P%20%E6%95%B4%E9%99%A4/">lc 1590. 使数组和能被 P 整除</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-八股文整理/计算机网络/dns与httpdns" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/">八股文整理</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/dns%E4%B8%8Ehttpdns/">
+            <time datetime="2025-12-01T16:41:00.000Z" itemprop="datePublished">2025-12-02</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/zthxxx/Wiki-site/raw/writing/source/_posts/八股文整理/计算机网络/dns与httpdns.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/zthxxx/Wiki-site/edit/writing/source/_posts/八股文整理/计算机网络/dns与httpdns.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/zthxxx/Wiki-site/commits/writing/source/_posts/八股文整理/计算机网络/dns与httpdns.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            dns与httpdns
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <h1 id="📘-DNS-相关对话（Q-A-格式整理版）"><a href="#📘-DNS-相关对话（Q-A-格式整理版）" class="headerlink" title="📘 DNS 相关对话（Q&#x2F;A 格式整理版）"></a>📘 DNS 相关对话（Q&#x2F;A 格式整理版）</h1><h2 id="Q1-我记得还有一个设计上-HTTPDNS，也给我讲讲？"><a href="#Q1-我记得还有一个设计上-HTTPDNS，也给我讲讲？" class="headerlink" title="Q1. 我记得还有一个设计上 HTTPDNS，也给我讲讲？"></a>Q1. 我记得还有一个设计上 HTTPDNS，也给我讲讲？</h2><p><strong>A：</strong><br>你可以把 HTTPDNS 理解为”DNS over HTTP&#x2F;HTTPS 的自建版本”，与 DoH（DNS<br>over HTTPS）有相似点，但定位不同。</p>
+<p>它主要解决的问题是：<br>传统 DNS 经常被运营商劫持、污染、缓存错误，特别是在移动网络环境。</p>
+<p>因此一些大厂（阿里、腾讯、字节）自建 HTTPDNS，让客户端通过 HTTP&#x2F;HTTPS<br>访问专门的 DNS 服务，以避免运营商干扰。</p>
+<hr>
+<h2 id="Q2-我的理解是：HTTPDNS-是一个单独分类，请帮我对比传统-DNS-和-HTTPDNS？"><a href="#Q2-我的理解是：HTTPDNS-是一个单独分类，请帮我对比传统-DNS-和-HTTPDNS？" class="headerlink" title="Q2. 我的理解是：HTTPDNS 是一个单独分类，请帮我对比传统 DNS 和 HTTPDNS？"></a>Q2. 我的理解是：HTTPDNS 是一个单独分类，请帮我对比传统 DNS 和 HTTPDNS？</h2><p><strong>A：</strong><br>下面是传统 DNS 与 HTTPDNS 的对比表：</p>
+<hr>
+<p>  对比项               传统 DNS                  HTTPDNS</p>
+<hr>
+<p>  传输协议             UDP&#x2F;53（也可 TCP&#x2F;53）     HTTP 或 HTTPS</p>
+<p>  易受运营商劫持       是                        否</p>
+<p>  数据格式             DNS 二进制格式            JSON &#x2F; 自定义格式</p>
+<p>  走代理               通常不走                  容易走（HTTP&#x2F;HTTPS）</p>
+<p>  CDN 就近策略         不一定准确（取决于本地    可以根据真实客户端 IP<br>                       DNS）                     精确调度</p>
+<p>  移动网络环境         易被劫持                  非常稳定</p>
+<p>  延迟                 很低                      一般略高（HTTP 请求）</p>
+<p>  适合场景             PC、固定网络              移动<br>                                             APP、大厂业务、特定网络环境</p>
+<hr>
+<hr>
+<h2 id="Q3-但是实际上-HTTPDNS-服务器的解析也要依赖传统-DNS？"><a href="#Q3-但是实际上-HTTPDNS-服务器的解析也要依赖传统-DNS？" class="headerlink" title="Q3. 但是实际上 HTTPDNS 服务器的解析也要依赖传统 DNS？"></a>Q3. 但是实际上 HTTPDNS 服务器的解析也要依赖传统 DNS？</h2><p><strong>A：</strong><br>是的，这是关键点。</p>
+<p>HTTPDNS 只是”客户端访问 DNS 的方式改变了”，但它本质上仍要：</p>
+<ul>
+<li>向权威 DNS 获取域名记录\</li>
+<li>或自己作为递归去向 Root → TLD → Authoritative 逐级解析</li>
+</ul>
+<p>HTTPDNS 不会改变 DNS 的基础结构，只是绕过运营商的 Local DNS。</p>
+<hr>
+<h2 id="Q4-HTTPDNS-是否需要在-DNS-中填写-DNS-服务器域名？还是直接使用-IP-构造-HTTP-访问？"><a href="#Q4-HTTPDNS-是否需要在-DNS-中填写-DNS-服务器域名？还是直接使用-IP-构造-HTTP-访问？" class="headerlink" title="Q4. HTTPDNS 是否需要在 DNS 中填写 DNS 服务器域名？还是直接使用 IP 构造 HTTP 访问？"></a>Q4. HTTPDNS 是否需要在 DNS 中填写 DNS 服务器域名？还是直接使用 IP 构造 HTTP 访问？</h2><p><strong>A：</strong><br>HTTPDNS 客户端通常必须 <strong>直接使用固定 IP</strong> 访问 HTTPDNS 服务。<br>不能用域名，否则就又要解析 DNS，形成循环。</p>
+<p>因此请求通常是：</p>
+<pre><code>http://203.107.1.1/resolve?host=example.com
+</code></pre>
+<p>或通过 HTTPS：</p>
+<pre><code>https://203.107.1.1/resolve
+</code></pre>
+<p>IP 是写死的。</p>
+<hr>
+<h2 id="Q5-但是一般来说，HTTP-层的-IP-直连处于安全考虑应该关闭的吧？"><a href="#Q5-但是一般来说，HTTP-层的-IP-直连处于安全考虑应该关闭的吧？" class="headerlink" title="Q5. 但是一般来说，HTTP 层的 IP 直连处于安全考虑应该关闭的吧？"></a>Q5. 但是一般来说，HTTP 层的 IP 直连处于安全考虑应该关闭的吧？</h2><p><strong>A：</strong><br>这里需要区分两类服务：</p>
+<h3 id="1）普通-Web-服务"><a href="#1）普通-Web-服务" class="headerlink" title="1）普通 Web 服务"></a><strong>1）普通 Web 服务</strong></h3><p>大多数网站<strong>确实会关闭 IP 直连</strong>：</p>
+<ul>
+<li>防止绕过 CDN\</li>
+<li>防止源站暴露\</li>
+<li>防止攻击者扫描\</li>
+<li>防止证书 mismatch</li>
+</ul>
+<h3 id="2）HTTPDNS-服务"><a href="#2）HTTPDNS-服务" class="headerlink" title="2）HTTPDNS 服务"></a><strong>2）HTTPDNS 服务</strong></h3><p>这是基础设施服务 → 必须支持 IP 直连。<br>否则客户端无法启动 DNS 解析链路。</p>
+<p>所以：</p>
+<ul>
+<li>业务网站：IP 直连关闭\</li>
+<li>HTTPDNS：必须开放 IP</li>
+</ul>
+<p>两者不矛盾。</p>
+<hr>
+<h2 id="Q6-类似于”浏览器里填的是-IP，但是在协议里还是域名”？"><a href="#Q6-类似于”浏览器里填的是-IP，但是在协议里还是域名”？" class="headerlink" title="Q6. 类似于”浏览器里填的是 IP，但是在协议里还是域名”？"></a>Q6. 类似于”浏览器里填的是 IP，但是在协议里还是域名”？</h2><p><strong>A：</strong><br>对 HTTPS 来说确实如此。</p>
+<p>流程是：</p>
+<ul>
+<li>浏览器访问 IP\</li>
+<li>但 TLS 握手会发 <strong>SNI（Server Name Indication）</strong>，里面包含域名\</li>
+<li>服务器根据域名选择证书和站点</li>
+</ul>
+<p>若不发送 SNI 或证书不匹配，服务器通常拒绝访问。</p>
+<hr>
+<h2 id="Q7-但是实际上构造攻击时也可以使用这种方式，那关闭-IP-直接访问的意义是什么？"><a href="#Q7-但是实际上构造攻击时也可以使用这种方式，那关闭-IP-直接访问的意义是什么？" class="headerlink" title="Q7. 但是实际上构造攻击时也可以使用这种方式，那关闭 IP 直接访问的意义是什么？"></a>Q7. 但是实际上构造攻击时也可以使用这种方式，那关闭 IP 直接访问的意义是什么？</h2><p><strong>A：</strong><br><strong>关闭 IP<br>直连并不是为了”绝对阻止攻击”，而是为了”降低攻击面、增加成本”。</strong></p>
+<p>意义包括：</p>
+<ul>
+<li>隐藏源站 IP\</li>
+<li>防止绕过 CDN &#x2F; WAF\</li>
+<li>过滤扫描器（大多数扫描器不会构造复杂 SNI&#x2F;Host）\</li>
+<li>避免证书泄露源站信息\</li>
+<li>阻止简单脚本攻击\</li>
+<li>缩小暴露面</li>
+</ul>
+<p>这是典型的防御原则：</p>
+<blockquote>
+<p><strong>不是阻止攻击，而是让攻击变得困难且成本高。</strong></p>
+</blockquote>
+<hr>
+<h2 id="Q8-但其实用反向-DNS-获取真实业务域名，再伪造-Host-也可以攻击？"><a href="#Q8-但其实用反向-DNS-获取真实业务域名，再伪造-Host-也可以攻击？" class="headerlink" title="Q8. 但其实用反向 DNS 获取真实业务域名，再伪造 Host 也可以攻击？"></a>Q8. 但其实用反向 DNS 获取真实业务域名，再伪造 Host 也可以攻击？</h2><p><strong>A：</strong><br>这是一个常见误区，实际情况如下：</p>
+<h3 id="1）绝大多数业务-IP-没有-PTR-记录"><a href="#1）绝大多数业务-IP-没有-PTR-记录" class="headerlink" title="1）绝大多数业务 IP 没有 PTR 记录"></a><strong>1）绝大多数业务 IP 没有 PTR 记录</strong></h3><p>尤其是云服务、CDN、源站。</p>
+<h3 id="2）有-PTR-的-IP-也通常不是业务域名"><a href="#2）有-PTR-的-IP-也通常不是业务域名" class="headerlink" title="2）有 PTR 的 IP 也通常不是业务域名"></a><strong>2）有 PTR 的 IP 也通常不是业务域名</strong></h3><p>多是：</p>
+<pre><code>xxx.provider.net
+xxx.cloud.internal
+</code></pre>
+<p>完全无意义。</p>
+<h3 id="3）即便知道域名，也无法绕过："><a href="#3）即便知道域名，也无法绕过：" class="headerlink" title="3）即便知道域名，也无法绕过："></a><strong>3）即便知道域名，也无法绕过</strong>：</h3><ul>
+<li>CDN\</li>
+<li>WAF\</li>
+<li>Token &#x2F; Session &#x2F; Cookie 鉴权\</li>
+<li>API gateway 限制</li>
+</ul>
+<h3 id="4）源站通常不暴露"><a href="#4）源站通常不暴露" class="headerlink" title="4）源站通常不暴露"></a><strong>4）源站通常不暴露</strong></h3><p>因为：</p>
+<ul>
+<li>托管在私网\</li>
+<li>仅 CDN IP 白名单可访问\</li>
+<li>或通过 SLB 内部网络访问</li>
+</ul>
+<blockquote>
+<p><strong>所以反向 DNS 不会让攻击更容易。</strong></p>
+</blockquote>
+<hr>
+<h2 id="Q9-也就是说并非”阻止”，而是”加大难度”？"><a href="#Q9-也就是说并非”阻止”，而是”加大难度”？" class="headerlink" title="Q9. 也就是说并非”阻止”，而是”加大难度”？"></a>Q9. 也就是说并非”阻止”，而是”加大难度”？</h2><p><strong>A：</strong><br>完全正确。</p>
+<p>这正是现代安全的核心思想：</p>
+<blockquote>
+<p><strong>安全不是绝对阻止，而是尽可能提高攻击难度，使其成本超出价值。</strong></p>
+</blockquote>
+<p>IP 直连关闭、域名 Host 验证、CDN 前置……都是这一策略的表现。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql%E4%B8%A4%E4%B8%AA%E5%BC%95%E6%93%8E%E7%9A%84%E5%8C%BA%E5%88%AB/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    mysql三个引擎的区别
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%89%E7%A7%8D%E7%B4%A2%E5%BC%95/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">数据库的三种索引</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2025 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

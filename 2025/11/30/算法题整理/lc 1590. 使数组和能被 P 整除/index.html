@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>lc 1590. 使数组和能被 P 整除 | Hexo</title>
+    
+    
+        <meta name="keywords" content="lc 1590. 使数组和能被 P 整除" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="题目链接lc超链接 算法思路主要思想是：假设整个数组模 p 之后的结果是 x，那么我们需要在数组中移除一个子数组，使得这个子数组模 p 的结果也是 x。从数学角度可以证明，移除这个子数组后，原数组的模会减少 x，从而变成 0。 举个例子，假设有五个数，它们模 p 的结果是 x，只要移除其中一个模 p 结果为 x 的子数组，那么剩下的数模 p 就是 0。 暴力算法思路最直观的想法是：对于每一个起点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lc 1590. 使数组和能被 P 整除">
+<meta property="og:url" content="http://example.com/2025/11/30/%E7%AE%97%E6%B3%95%E9%A2%98%E6%95%B4%E7%90%86/lc%201590.%20%E4%BD%BF%E6%95%B0%E7%BB%84%E5%92%8C%E8%83%BD%E8%A2%AB%20P%20%E6%95%B4%E9%99%A4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="题目链接lc超链接 算法思路主要思想是：假设整个数组模 p 之后的结果是 x，那么我们需要在数组中移除一个子数组，使得这个子数组模 p 的结果也是 x。从数学角度可以证明，移除这个子数组后，原数组的模会减少 x，从而变成 0。 举个例子，假设有五个数，它们模 p 的结果是 x，只要移除其中一个模 p 结果为 x 的子数组，那么剩下的数模 p 就是 0。 暴力算法思路最直观的想法是：对于每一个起点">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-30T15:59:59.000Z">
+<meta property="article:modified_time" content="2025-11-30T16:32:35.623Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            八股文整理
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JAVA
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/01/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/JAVA/%E9%94%81%E9%83%A8%E5%88%86/">锁相关知识点</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            操作系统
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            系统工具
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7/cgroup/">cgroup</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/OLAP%E6%95%B0%E6%8D%AE%E5%BA%93/">OLAP数据库</a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql%E4%B8%A4%E4%B8%AA%E5%BC%95%E6%93%8E%E7%9A%84%E5%8C%BA%E5%88%AB/">mysql三个引擎的区别</a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%89%E7%A7%8D%E7%B4%A2%E5%BC%95/">数据库的三种索引</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            传输层协议
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            TCP
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE/TCP/%E6%8C%A5%E6%89%8B%E8%BF%87%E7%A8%8B/">tcp挥手与断开</a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE/TCP/%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B/">tcp握手与链接</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                     <li class="file"><a href="/2025/12/01/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8D%8F%E8%AE%AE%E5%88%86%E5%B1%82/"></a></li>  <li class="file"><a href="/2025/12/02/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/dns%E4%B8%8Ehttpdns/">dns与httpdns</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            测试用
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2025/11/28/%E6%B5%8B%E8%AF%95%E7%94%A8/hello-world/">Hello World</a></li>  <li class="file"><a href="/2025/11/28/%E6%B5%8B%E8%AF%95%E7%94%A8/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/">第一篇日志</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            算法题整理
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2025/11/30/%E7%AE%97%E6%B3%95%E9%A2%98%E6%95%B4%E7%90%86/lc%201590.%20%E4%BD%BF%E6%95%B0%E7%BB%84%E5%92%8C%E8%83%BD%E8%A2%AB%20P%20%E6%95%B4%E9%99%A4/">lc 1590. 使数组和能被 P 整除</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-算法题整理/lc 1590. 使数组和能被 P 整除" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98%E6%95%B4%E7%90%86/">算法题整理</a>
+    </div>
+
+                        
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2025/11/30/%E7%AE%97%E6%B3%95%E9%A2%98%E6%95%B4%E7%90%86/lc%201590.%20%E4%BD%BF%E6%95%B0%E7%BB%84%E5%92%8C%E8%83%BD%E8%A2%AB%20P%20%E6%95%B4%E9%99%A4/">
+            <time datetime="2025-11-30T15:59:59.000Z" itemprop="datePublished">2025-11-30</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/zthxxx/Wiki-site/raw/writing/source/_posts/算法题整理/lc 1590. 使数组和能被 P 整除.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/zthxxx/Wiki-site/edit/writing/source/_posts/算法题整理/lc 1590. 使数组和能被 P 整除.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/zthxxx/Wiki-site/commits/writing/source/_posts/算法题整理/lc 1590. 使数组和能被 P 整除.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            lc 1590. 使数组和能被 P 整除
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/make-sum-divisible-by-p/description/">lc超链接</a></p>
+<h1 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h1><p>主要思想是：假设整个数组模 p 之后的结果是 x，那么我们需要在数组中移除一个子数组，使得这个子数组模 p 的结果也是 x。从数学角度可以证明，移除这个子数组后，原数组的模会减少 x，从而变成 0。</p>
+<p>举个例子，假设有五个数，它们模 p 的结果是 x，只要移除其中一个模 p 结果为 x 的子数组，那么剩下的数模 p 就是 0。</p>
+<h2 id="暴力算法"><a href="#暴力算法" class="headerlink" title="暴力算法"></a>暴力算法</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>最直观的想法是：对于每一个起点 i，枚举以它为起点的所有子数组，直到找到一个子数组的模 p 结果为 x，或者遍历到数组末尾。</p>
+<p>如果找到匹配的子数组，就用它来更新”最短子数组长度”这个变量。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minSubarray(vector&lt;int&gt;&amp; nums, int p) &#123;</span><br><span class="line">        //长短指针循环法</span><br><span class="line">        int n=nums.size();</span><br><span class="line">        int sum_mod=0;</span><br><span class="line">        for(auto a:nums)&#123;</span><br><span class="line">            sum_mod+=a;</span><br><span class="line">            sum_mod%=p;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum_mod==0)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        int min_leng=INT_MAX;</span><br><span class="line">        for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">            int sum_mod_temp=0;</span><br><span class="line">            for(int j=i;j&lt;n;j++)&#123;</span><br><span class="line">                sum_mod_temp+=(nums[j]%p);</span><br><span class="line">                sum_mod_temp%=p;</span><br><span class="line">                if(sum_mod==sum_mod_temp)&#123;</span><br><span class="line">                    min_leng=min(min_leng,j-i+1);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(min_leng==INT_MAX || min_leng==n)&#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        return min_leng;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>该方法会超时，最坏时间复杂度为 O(n²)。空间复杂度为 O(1)。</p>
+<h2 id="优化算法（官解）"><a href="#优化算法（官解）" class="headerlink" title="优化算法（官解）"></a>优化算法（官解）</h2><p>另一种思路是使用前缀和配合哈希表的方法。</p>
+<p>对于任意一个位置 i，考虑以该位置为结尾的前缀和。我们需要找到一个子数组，使得该子数组的模 p 结果等于 x。利用前缀和的性质，如果当前前缀和的模为 y，那么我们需要找到一个之前的前缀和，使得两个前缀和的模差为 x。</p>
+<p>为了找到最短的子数组，对于任意一个位置，我们只需要找到它左边最近的一个满足条件的前缀和即可。因此，我们可以使用一个哈希表（字典），来记录每个前缀和模 p 值对应的最近位置。</p>
+<h3 id="我的代码"><a href="#我的代码" class="headerlink" title="我的代码"></a>我的代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minSubarray(vector&lt;int&gt;&amp; nums, int p) &#123;</span><br><span class="line">        unordered_map&lt;int,int&gt; right_mod;</span><br><span class="line">        int sum_mod=0;</span><br><span class="line">        int n=nums.size();</span><br><span class="line">        int min_len=INT_MAX;</span><br><span class="line">        //取需要消掉的模</span><br><span class="line">        int total_x=0;</span><br><span class="line">        for(auto a:nums)&#123;</span><br><span class="line">            total_x+=a;</span><br><span class="line">            total_x%=p;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;total_x&lt;&lt;endl;</span><br><span class="line">        //在整个数组中消去一段，这一段的模差应该是total_x</span><br><span class="line">        for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">            sum_mod=(sum_mod+nums[i])%p;</span><br><span class="line"></span><br><span class="line">            if(sum_mod==total_x)&#123;</span><br><span class="line">                min_len=min(min_len,i+1);</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">            if(right_mod[(sum_mod+p-total_x)%p]!=0)&#123;</span><br><span class="line">                min_len=min(min_len,i-right_mod[(sum_mod+p-total_x)%p]+1);</span><br><span class="line">                cout&lt;&lt;i-right_mod[(sum_mod+p-total_x)%p]+1&lt;&lt;&quot;-&quot;&lt;&lt;endl;</span><br><span class="line">            &#125;</span><br><span class="line">            right_mod[sum_mod]=i+1;</span><br><span class="line">            cout&lt;&lt;min_len&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum_mod==0)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        return min_len==n?-1:min_len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="官解"><a href="#官解" class="headerlink" title="官解"></a>官解</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minSubarray(vector&lt;int&gt;&amp; nums, int p) &#123;</span><br><span class="line">        int x = 0;</span><br><span class="line">        for (auto num : nums) &#123;</span><br><span class="line">            x = (x + num) % p;</span><br><span class="line">        &#125;</span><br><span class="line">        if (x == 0) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        unordered_map&lt;int, int&gt; index;</span><br><span class="line">        int y = 0, res = nums.size();</span><br><span class="line">        for (int i = 0; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            index[y] = i; // f[i] mod p = y，因此哈希表记录 y 对应的下标为 i</span><br><span class="line">            y = (y + nums[i]) % p;</span><br><span class="line">            if (index.count((y - x + p) % p) &gt; 0) &#123;</span><br><span class="line">                res = min(res, i - index[(y - x + p) % p] + 1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res == nums.size() ? -1 : res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">作者：力扣官方题解</span><br><span class="line">链接：https://leetcode.cn/problems/make-sum-divisible-by-p/solutions/2157277/shi-shu-zu-he-neng-bei-p-zheng-chu-by-le-dob9/</span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h3><p>对每个数遍历一遍，时间复杂度为 O(n)。需要一个哈希表存储每个余数对应的位置，空间复杂度为 O(n)。</p>
+<h3 id="我的解与官方解法的对比及注意事项"><a href="#我的解与官方解法的对比及注意事项" class="headerlink" title="我的解与官方解法的对比及注意事项"></a>我的解与官方解法的对比及注意事项</h3><ol>
+<li><p><strong><code>index.count()</code> 的使用</strong>：我之前没有使用过这个方法，所以用了一个”0”值来标记某个键是否真的出现过，位置记录也需要相应的偏移，这是不必要的。使用 <code>index.count()</code> 可以直接判断键是否存在。</p>
+</li>
+<li><p><strong><code>sum_mod==total_x</code> 的判断</strong>：这个判断其实是没必要的，因为这个情况实际上会映射到哈希表的”0”键，可以通过哈希表统一处理。</p>
+</li>
+<li><p><strong>更新顺序的差异</strong>：官解中的 <code>index[y]</code> 和我的更新顺序不太一样，官解是在下一轮循环中更新的，这个顺序问题不大，但需要注意边界情况的处理。</p>
+</li>
+</ol>
+<h1 id="一些笔记"><a href="#一些笔记" class="headerlink" title="一些笔记"></a>一些笔记</h1><p>涉及取模运算的问题，很多时候可以利用同余性质和哈希表来优化。</p>
+<p>当需要优化时间复杂度时，前缀和配合哈希表往往是一个可行的思路。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2025/12/01/%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8D%8F%E8%AE%AE%E5%88%86%E5%B1%82/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    (no title)
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2025/11/28/%E6%B5%8B%E8%AF%95%E7%94%A8/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%97%A5%E5%BF%97/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">第一篇日志</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2025 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
